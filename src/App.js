@@ -14,12 +14,28 @@ setInterval(() => {
 		title: `Wyświetl wiadomość ${index}`,
 		body: `Treść wiadomości numer ${index}`,
 	});
-}, 2000);
+}, 5000);
 
 class App extends Component {
 	state = {
 		comments: [...data],
 	};
+
+	getData = () => {
+		if (this.state.comments.length !== data.length) {
+			this.setState({
+				comments: [...data],
+			});
+		}
+	};
+
+	componentDidMount() {
+		this.idIndex = setInterval(this.getData, 1000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.idIndex);
+	}
 	render() {
 		const comments = this.state.comments.map((comments) => (
 			<div key={comments.id}>
